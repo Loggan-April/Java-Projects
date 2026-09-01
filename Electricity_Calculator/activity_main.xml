@@ -1,0 +1,71 @@
+package com.example.electricity_calculator;
+
+/**
+ * Represents an appliance entered by the user on the input screen,
+ * along with its usage details needed for the electricity calculation.
+ */
+public class Appliance {
+
+    // 1. Private instance variables
+    private String applianceName;
+    private String category;
+    private double powerRatingWatts;
+    private double hoursPerDay;
+    private double tariffPerKwh;
+
+    // 2. Default constructor
+    public Appliance() {
+    }
+
+    // 3. Parameterised constructor
+    public Appliance(String applianceName, String category, double powerRatingWatts,
+                     double hoursPerDay, double tariffPerKwh) {
+        this.applianceName = applianceName;
+        this.category = category;
+        this.powerRatingWatts = powerRatingWatts;
+        this.hoursPerDay = hoursPerDay;
+        this.tariffPerKwh = tariffPerKwh;
+    }
+
+    // 4. Getter methods
+    public String getApplianceName() {
+        return applianceName;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public double getPowerRatingWatts() {
+        return powerRatingWatts;
+    }
+
+    public double getHoursPerDay() {
+        return hoursPerDay;
+    }
+
+    public double getTariffPerKwh() {
+        return tariffPerKwh;
+    }
+
+    // 5. Setter methods
+    public void setApplianceName(String applianceName) {
+        this.applianceName = applianceName;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setPowerRatingWatts(double powerRatingWatts) {
+        this.powerRatingWatts = powerRatingWatts;
+    }
+
+    public void setHoursPerDay(double hoursPerDay) {
+        this.hoursPerDay = hoursPerDay;
+    }
+
+    public void setTariffPerKwh(double tariffPerKwh) {
+        this.tariffPerKwh = tariffPerKwh;
+    }
+}

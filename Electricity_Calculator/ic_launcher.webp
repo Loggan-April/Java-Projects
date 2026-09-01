@@ -1,0 +1,37 @@
+package com.example.electricity_calculator;
+
+/**
+ * Classifies monthly electricity consumption into a tier and gives a
+ * matching recommendation message. Used by ResultsActivity to populate
+ * the Energy Rating and Recommendation fields on the report screen.
+ */
+public class Recommendation {
+
+    public static String getTier(double monthlyEnergyConsumptionKwh) {
+        if (monthlyEnergyConsumptionKwh < 150) {
+            return "Excellent";
+        } else if (monthlyEnergyConsumptionKwh <= 299) {
+            return "Good";
+        } else if (monthlyEnergyConsumptionKwh <= 499) {
+            return "Average";
+        } else if (monthlyEnergyConsumptionKwh <= 699) {
+            return "High Consumption";
+        } else {
+            return "Very High Consumption";
+        }
+    }
+
+    public static String getMessage(double monthlyEnergyConsumptionKwh) {
+        if (monthlyEnergyConsumptionKwh < 150) {
+            return "Continue maintaining your current electricity usage";
+        } else if (monthlyEnergyConsumptionKwh <= 299) {
+            return "Consider switching to LED lighting";
+        } else if (monthlyEnergyConsumptionKwh <= 499) {
+            return "Reduce appliance usage during peak hours";
+        } else if (monthlyEnergyConsumptionKwh <= 699) {
+            return "Replace old appliances with energy-efficient models";
+        } else {
+            return "Immediate action is recommended to reduce electricity usage";
+        }
+    }
+}

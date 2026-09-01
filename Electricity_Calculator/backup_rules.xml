@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/results"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".ResultsActivity">
+
+    <!-- Header flush against the top edge, only bottom corners curved -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/headerBox"
+        android:layout_width="0dp"
+        android:layout_height="110dp"
+        android:background="@drawable/bg_header_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iconNotification"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="336dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="11dp"
+            android:contentDescription="Notifications"
+            android:src="@drawable/baseline_notifications_24"
+            app:layout_constraintEnd_toStartOf="@+id/iconSettings"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/white" />
+
+        <ImageView
+            android:id="@+id/iconSettings"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Settings"
+            android:src="@drawable/baseline_settings_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@android:color/white" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        android:text="Electricity Report"
+        android:textColor="@color/text_dark"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerBox" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView3">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Labels column -->
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Appliance"
+                android:textColor="@color/text_dark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/valueAppliance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <TextView
+                android:id="@+id/valueAppliance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_dark"
+                app:layout_constraintBottom_toBottomOf="@id/textView6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textView6"
+                app:layout_constraintTop_toTopOf="@id/textView6" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Category"
+                android:textColor="@color/text_dark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/valueCategory"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView6"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <TextView
+                android:id="@+id/valueCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_dark"
+                app:layout_constraintBottom_toBottomOf="@id/textView7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textView7"
+                app:layout_constraintTop_toTopOf="@id/textView7" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Daily Consumption"
+                android:textColor="@color/text_dark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/valueDailyConsumption"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView7"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <TextView
+                android:id="@+id/valueDailyConsumption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_dark"
+                app:layout_constraintBottom_toBottomOf="@id/textView8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textView8"
+                app:layout_constraintTop_toTopOf="@id/textView8" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Monthly Consumption"
+                android:textColor="@color/text_dark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/valueMonthlyConsumption"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView8"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <TextView
+                android:id="@+id/valueMonthlyConsumption"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_dark"
+                app:layout_constraintBottom_toBottomOf="@id/textView9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textView9"
+                app:layout_constraintTop_toTopOf="@id/textView9" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Monthly Electricity Cost"
+                android:textColor="@color/text_dark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/valueMonthlyCost"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView9"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <TextView
+                android:id="@+id/valueMonthlyCost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_dark"
+                app:layout_constraintBottom_toBottomOf="@id/textView10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textView10"
+                app:layout_constraintTop_toTopOf="@id/textView10" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Energy Rating"
+                android:textColor="@color/text_dark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/valueEnergyRating"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView10"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <TextView
+                android:id="@+id/valueEnergyRating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/cyan_dark"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/textView11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textView11"
+                app:layout_constraintTop_toTopOf="@id/textView11" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Recommendation"
+                android:textColor="@color/text_dark"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/valueRecommendation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView11"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <TextView
+                android:id="@+id/valueRecommendation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/textView12"
+                app:layout_constraintTop_toTopOf="@id/textView12" />
+
+            <Button
+                android:id="@+id/btnCalculateAgain"
+                android:layout_width="200dp"
+                android:layout_height="52dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="#0097A7"
+                android:elevation="2dp"
+                android:text="Calculate Again"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/valueRecommendation" />
+
+            <Button
+                android:id="@+id/btnExit"
+                android:layout_width="130dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="#FF0000"
+                android:elevation="2dp"
+                android:text="Exit"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnCalculateAgain" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

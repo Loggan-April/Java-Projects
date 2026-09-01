@@ -1,0 +1,71 @@
+package com.example.electricity_calculator;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class DatabaseHelper extends SQLiteOpenHelper {
+
+    private static final String DATABASE_NAME = "ElectricityCalculator.db";
+    private static final int DATABASE_VERSION = 1;
+
+    public static final String TABLE_NAME = "appliance_records";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_APPLIANCE_NAME = "appliance_name";
+    public static final String COLUMN_CATEGORY = "category";
+    public static final String COLUMN_DAILY_CONSUMPTION = "daily_consumption";
+    public static final String COLUMN_MONTHLY_CONSUMPTION = "monthly_consumption";
+    public static final String COLUMN_MONTHLY_COST = "monthly_cost";
+    public static final String COLUMN_ENERGY_RATING = "energy_rating";
+    public static final String COLUMN_RECOMMENDATION = "recommendation";
+
+    public DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String createTable = "CREATE TABLE " + TABLE_NAME + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_APPLIANCE_NAME + " TEXT, " +
+                COLUMN_CATEGORY + " TEXT, " +
+                COLUMN_DAILY_CONSUMPTION + " REAL, " +
+                COLUMN_MONTHLY_CONSUMPTION + " REAL, " +
+                COLUMN_MONTHLY_COST + " REAL, " +
+                COLUMN_ENERGY_RATING + " TEXT, " +
+                COLUMN_RECOMMENDATION + " TEXT)";
+        db.execSQL(createTable);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+    }
+
+    /**
+     * Inserts one appliance report into the database.
+     * Returns true if the insert succeeded, false otherwise.
+     */
+    public boolean addRecord(String applianceName, String category, double dailyConsumption,
+                             double monthlyConsumption, double monthlyCost,
+                             String energyRating, String recommendation) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_APPLIANCE_NAME, applianceName);
+        values.put(COLUMN_CATEGORY, category);
+        values.put(COLUMN_DAILY_CONSUMPTION, dailyConsumption);
+        values.put(COLUMN_MONTHLY_CONSUMPTION, monthlyConsumption);
+        values.put(COLUMN_MONTHLY_COST, monthlyCost);
+        values.put(COLUMN_ENERGY_RATING, energyRating);
+        values.put(COLUMN_RECOMMENDATION, recommendation);
+
+        long result = db.insert(TABLE_NAME, null, values);
+        db.close();
+
+        return result != -1;
+    }
+}

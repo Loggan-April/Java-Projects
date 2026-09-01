@@ -1,0 +1,143 @@
+package com.example.electricity_calculator;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class ElectricityCalculator extends AppCompatActivity {
+    EditText etApplianceName, etPowerRating, etHours, etTariff;
+    Spinner spinnerCategory;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_input);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.input), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        etApplianceName = findViewById(R.id.ApplianceName);
+        etPowerRating = findViewById(R.id.decimalPowerRating);
+        etHours = findViewById(R.id.decimalHours);
+        etTariff = findViewById(R.id.decimalTariff);
+        spinnerCategory = findViewById(R.id.spinnerCategory);
+
+        String[] categories = {
+                "Kitchen Appliance",
+                "Entertainment",
+                "Lighting",
+                "Heating",
+                "Cooling",
+                "Laundry"
+        };
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        categories
+                );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(adapter);
+
+        Button btnCalculate = findViewById(R.id.btnCalculate);
+        btnCalculate.setOnClickListener(v -> calculateAndProceed());
+
+        Button btnClear = findViewById(R.id.btnClear);
+        btnClear.setOnClickListener(v -> ClearFields());
+    }
+
+    private void calculateAndProceed() {
+        String applianceNameText = etApplianceName.getText().toString().trim();
+        String powerText = etPowerRating.getText().toString().trim();
+        String hoursText = etHours.getText().toString().trim();
+        String tariffText = etTariff.getText().toString().trim();
+        String category = spinnerCategory.getSelectedItem().toString();
+
+        // Validation
+        if (applianceNameText.isEmpty() || powerText.isEmpty() || hoursText.isEmpty() || tariffText.isEmpty()) {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        double powerRatingWatts;
+        double hoursPerDay;
+        double tariffPerKwh;
+        try {
+            powerRatingWatts = Double.parseDouble(powerText);
+            hoursPerDay = Double.parseDouble(hoursText);
+            tariffPerKwh = Double.parseDouble(tariffText);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Power, hours, and tariff must be valid numbers", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (powerRatingWatts <= 0 || hoursPerDay <= 0 || hoursPerDay > 24 || tariffPerKwh <= 0) {
+            Toast.makeText(this, "Please enter realistic positive values (hours must be 0-24)", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Build an Appliance object (Appliance.java) from the validated input
+        Appliance appliance = new Appliance(
+                applianceNameText,
+                category,
+                powerRatingWatts,
+                hoursPerDay,
+                tariffPerKwh
+        );
+
+        // Perform the calculation using the Appliance's getters
+        double dailyConsumptionKwh = (appliance.getPowerRatingWatts() * appliance.getHoursPerDay()) / 100.0;
+        double monthlyConsumptionKwh = dailyConsumptionKwh * 30;
+        double monthlyCost = monthlyConsumptionKwh * appliance.getTariffPerKwh();
+
+        CalculationResult result = new CalculationResult(
+                dailyConsumptionKwh,
+                monthlyConsumptionKwh,
+                monthlyCost
+        );
+
+        // Send the appliance details plus the CalculationResult to ResultsActivity
+        Intent intent = new Intent(ElectricityCalculator.this, ResultsActivity.class);
+        intent.putExtra("APPLIANCE_NAME", appliance.getApplianceName());
+        intent.putExtra("CATEGORY", appliance.getCategory());
+        intent.putExtra("CALC_RESULT", result);
+        startActivity(intent);
+    }
+
+    protected void ClearFields() {
+        etApplianceName.setText("");
+        etPowerRating.setText("");
+        etHours.setText("");
+        etTariff.setText("");
+        spinnerCategory.setSelection(0);
+    }
+}
+
+/**
+ * Holds the outcome of an electricity usage calculation so it can be passed
+ * as a single object from ElectricityCalculator to ResultsActivity via an Intent.
+ * Implements Serializable so it can travel inside Intent.putExtra().
+ */
+class CalculationResult implements java.io.Serializable {
+    double dailyEnergyConsumptionKwh;
+    double monthlyEnergyConsumptionKwh;
+    double monthlyCost;
+
+    CalculationResult(double dailyEnergyConsumptionKwh, double monthlyEnergyConsumptionKwh, double monthlyCost) {
+        this.dailyEnergyConsumptionKwh = dailyEnergyConsumptionKwh;
+        this.monthlyEnergyConsumptionKwh = monthlyEnergyConsumptionKwh;
+        this.monthlyCost = monthlyCost;
+    }
+}

@@ -1,0 +1,94 @@
+package com.example.electricity_calculator;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import java.util.Locale;
+
+public class ResultsActivity extends AppCompatActivity {
+
+    // Kept as fields so they're accessible from the btnCalculateAgain listener too
+    String applianceName, category, energyRatingTier, recommendationMessage;
+    double dailyConsumption, monthlyConsumption, monthlyCost;
+
+    DatabaseHelper dbHelper;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_results);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.results), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        dbHelper = new DatabaseHelper(this);
+
+        //Retrieve data passed from ElectricityCalculator
+        Intent intent = getIntent();
+        applianceName = intent.getStringExtra("APPLIANCE_NAME");
+        category = intent.getStringExtra("CATEGORY");
+        CalculationResult result = (CalculationResult) intent.getSerializableExtra("CALC_RESULT");
+
+        dailyConsumption = result.dailyEnergyConsumptionKwh;
+        monthlyConsumption = result.monthlyEnergyConsumptionKwh;
+        monthlyCost = result.monthlyCost;
+
+        energyRatingTier = Recommendation.getTier(monthlyConsumption);
+        recommendationMessage = Recommendation.getMessage(monthlyConsumption);
+
+        TextView valueAppliance = findViewById(R.id.valueAppliance);
+        TextView valueCategory = findViewById(R.id.valueCategory);
+        TextView valueDailyConsumption = findViewById(R.id.valueDailyConsumption);
+        TextView valueMonthlyConsumption = findViewById(R.id.valueMonthlyConsumption);
+        TextView valueMonthlyCost = findViewById(R.id.valueMonthlyCost);
+        TextView valueEnergyRating = findViewById(R.id.valueEnergyRating);
+        TextView valueRecommendation = findViewById(R.id.valueRecommendation);
+
+        valueAppliance.setText(applianceName);
+        valueCategory.setText(category);
+        valueDailyConsumption.setText(String.format(Locale.getDefault(), "%.2f kWh", dailyConsumption));
+        valueMonthlyConsumption.setText(String.format(Locale.getDefault(), "%.2f kWh", monthlyConsumption));
+        valueMonthlyCost.setText(String.format(Locale.getDefault(), "R%.2f", monthlyCost));
+        valueEnergyRating.setText(energyRatingTier);
+        valueRecommendation.setText(recommendationMessage);
+
+        Button btnCalculateAgain = findViewById(R.id.btnCalculateAgain);
+        btnCalculateAgain.setOnClickListener(v -> {
+            boolean saved = dbHelper.addRecord(
+                    applianceName,
+                    category,
+                    dailyConsumption,
+                    monthlyConsumption,
+                    monthlyCost,
+                    energyRatingTier,
+                    recommendationMessage
+            );
+
+            if (saved) {
+                Toast.makeText(this, "Report saved", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Failed to save report", Toast.LENGTH_SHORT).show();
+            }
+
+            Intent nextIntent = new Intent(ResultsActivity.this, ElectricityCalculator.class);
+            startActivity(nextIntent);
+            finish();
+        });
+
+        Button btnExit = findViewById(R.id.btnExit);
+        btnExit.setOnClickListener((v -> {
+            finishAffinity();
+            System.exit(0);
+        }));
+    }
+}
