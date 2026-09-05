@@ -1,0 +1,89 @@
+package com.example.transportcostcomparator;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.activity.EdgeToEdge;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import java.util.Locale;
+
+public class ResultsActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_results);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.results), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        // ===== Retrieve and calculate =====
+        Transport transport = (Transport) getIntent().getSerializableExtra("transport");
+
+        TextView tvModeValue = findViewById(R.id.tvModeValue);
+        TextView tvDailyCostValue = findViewById(R.id.tvDailyCostValue);
+        TextView tvMonthlyCostValue = findViewById(R.id.tvMonthlyCostValue);
+        TextView tvDistanceValue = findViewById(R.id.tvDistanceValue);
+        TextView tvCategoryValue = findViewById(R.id.tvCategoryValue);
+        TextView tvRecommendationBody = findViewById(R.id.tvRecommendationBody);
+
+        if (transport != null) {
+            double dailyCost = TransportCalculator.calculateDailyCost(transport);
+            double monthlyCost = TransportCalculator.calculateMonthlyCost(transport);
+            double monthlyDistance = TransportCalculator.calculateMonthlyDistance(transport);
+            Recommendation recommendation = Recommendation.generate(monthlyCost);
+
+            tvModeValue.setText(transport.getModeOfTransport());
+            tvDailyCostValue.setText(String.format(Locale.getDefault(), "R%.2f", dailyCost));
+            tvMonthlyCostValue.setText(String.format(Locale.getDefault(), "R%.2f", monthlyCost));
+            tvDistanceValue.setText(String.format(Locale.getDefault(), "%.0f KM", monthlyDistance));
+            tvCategoryValue.setText(recommendation.getCostCategory());
+            tvRecommendationBody.setText(recommendation.getRecommendationText());
+        }
+
+
+        Button btnHome = findViewById(R.id.btnHome);
+        Button btnDetails = findViewById(R.id.btnDetails);
+        Button btnReport = findViewById(R.id.btnReport);
+        Button btnCalculateAgain = findViewById(R.id.btnCalculateAgain);
+        Button btnExit = findViewById(R.id.btnExitReport);
+        TextView btnHelp = findViewById(R.id.btnHelp);
+
+        btnReport.setOnClickListener(v -> {
+            if (!(this instanceof ResultsActivity)) {
+                startActivity(new Intent(this, ResultsActivity.class));
+            }
+        });
+
+        btnDetails.setOnClickListener(v -> {
+            startActivity(new Intent(ResultsActivity.this, InputActivity.class));
+        });
+
+        btnHome.setOnClickListener(v -> {
+            startActivity(new Intent(ResultsActivity.this, MainActivity.class));
+        });
+
+        btnHelp.setOnClickListener(v -> {
+            startActivity(new Intent(ResultsActivity.this, HelpActivity.class));
+        });
+
+        btnCalculateAgain.setOnClickListener(v -> {
+            startActivity(new Intent(ResultsActivity.this, InputActivity.class));
+        });
+
+        btnExit.setOnClickListener(v -> {
+            stopService(new Intent(this, MusicService.class));
+            finishAffinity();
+            System.exit(0);
+        });
+    }
+}

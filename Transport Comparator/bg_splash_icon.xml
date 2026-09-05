@@ -1,0 +1,56 @@
+package com.example.transportcostcomparator;
+
+public class Recommendation {
+
+    private String costCategory;
+    private String recommendationText;
+
+    public Recommendation() {
+    }
+
+    public Recommendation(String costCategory, String recommendationText) {
+        this.costCategory = costCategory;
+        this.recommendationText = recommendationText;
+    }
+
+    public String getCostCategory() {
+        return costCategory;
+    }
+
+    public void setCostCategory(String costCategory) {
+        this.costCategory = costCategory;
+    }
+
+    public String getRecommendationText() {
+        return recommendationText;
+    }
+
+    public void setRecommendationText(String recommendationText) {
+        this.recommendationText = recommendationText;
+    }
+
+    // Builds a Recommendation purely from the calculated monthly cost.
+    public static Recommendation generate(double monthlyCost) {
+        String category;
+        String message;
+
+        if (monthlyCost < 1000) {
+            category = "Low Cost";
+            message = "Continue using your current transport method.";
+        } else if (monthlyCost < 2000) {
+            category = "Moderate";
+            message = "Consider carpooling where possible.";
+        } else if (monthlyCost < 3000) {
+            category = "High";
+            message = "Reduce unnecessary trips and combine errands.";
+        } else if (monthlyCost < 5000) {
+            category = "Very High";
+            message = "Consider public transport for regular commuting.";
+        } else {
+            category = "Excessive";
+            message = "Immediate action is recommended to reduce transport costs.";
+        }
+
+        return new Recommendation(category, message);
+    }
+}

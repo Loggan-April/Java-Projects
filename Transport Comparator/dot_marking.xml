@@ -1,0 +1,16 @@
+package com.example.transportcostcomparator;
+
+public class TransportCalculator {
+
+    public static double calculateDailyCost(Transport transport) {
+        return transport.getDistancePerDay() * transport.getCostPerKm();
+    }
+
+    public static double calculateMonthlyCost(Transport transport) {
+        return calculateDailyCost(transport) * transport.getTravelDays();
+    }
+
+    public static double calculateMonthlyDistance(Transport transport) {
+        return transport.getDistancePerDay() * transport.getTravelDays();
+    }
+}

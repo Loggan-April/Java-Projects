@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    android:background="@color/asphalt">
+
+    <!-- dashed lane-marking line — layerType="software" is REQUIRED or the dashes won't draw -->
+    <View
+        android:id="@+id/laneMarking"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginBottom="10dp"
+        android:layerType="software"
+        android:background="@drawable/dashed_marking"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/btnHelp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_help_circle"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:text="@string/help_icon_symbol"
+        android:textColor="@color/paper"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/brandMark"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="22dp"
+        android:background="@drawable/bg_brand_mark"
+        android:padding="8dp"
+        android:src="@drawable/ic_route"
+        android:contentDescription="@string/app_icon_desc"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/brandName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/app_name_full"
+        android:textColor="@color/paper"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        app:layout_constraintStart_toEndOf="@id/brandMark"
+        app:layout_constraintTop_toTopOf="@id/brandMark"
+        app:layout_constraintBottom_toTopOf="@id/brandSub"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/brandSub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_tagline"
+        android:textColor="@color/asphalt_muted"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="@id/brandName"
+        app:layout_constraintTop_toBottomOf="@id/brandName"
+        app:layout_constraintBottom_toBottomOf="@id/brandMark" />
+
+    <LinearLayout
+        android:id="@+id/headerNavRow"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="22dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintTop_toBottomOf="@id/brandSub"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btnHome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/nav_home"
+            android:textAllCaps="false"
+            android:textColor="@color/marking"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/nav_details"
+            android:textAllCaps="false"
+            android:textColor="@color/paper"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btnReport"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:text="@string/nav_report"
+            android:textAllCaps="false"
+            android:textColor="@color/paper"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

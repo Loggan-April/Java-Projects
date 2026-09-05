@@ -1,0 +1,53 @@
+package com.example.transportcostcomparator;
+
+import java.io.Serializable;
+
+public class Transport implements Serializable {
+
+    private String modeOfTransport;
+    private double distancePerDay;
+    private double costPerKm;
+    private int travelDays;
+
+    public Transport() {
+    }
+
+    public Transport(String modeOfTransport, double distancePerDay, double costPerKm, int travelDays) {
+        this.modeOfTransport = modeOfTransport;
+        this.distancePerDay = distancePerDay;
+        this.costPerKm = costPerKm;
+        this.travelDays = travelDays;
+    }
+
+    public String getModeOfTransport() {
+        return modeOfTransport;
+    }
+
+    public void setModeOfTransport(String modeOfTransport) {
+        this.modeOfTransport = modeOfTransport;
+    }
+
+    public double getDistancePerDay() {
+        return distancePerDay;
+    }
+
+    public void setDistancePerDay(double distancePerDay) {
+        this.distancePerDay = distancePerDay;
+    }
+
+    public double getCostPerKm() {
+        return costPerKm;
+    }
+
+    public void setCostPerKm(double costPerKm) {
+        this.costPerKm = costPerKm;
+    }
+
+    public int getTravelDays() {
+        return travelDays;
+    }
+
+    public void setTravelDays(int travelDays) {
+        this.travelDays = travelDays;
+    }
+}
